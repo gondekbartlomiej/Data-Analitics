@@ -15,7 +15,7 @@ N_SAMP = 100000
 BINS = 30
 
 #%% Normal distribution
-'''
+
 df = pd.DataFrame()
 
 mu = [-15, 0, 15]
@@ -59,11 +59,11 @@ for b in bins:
    
     
 # komentarze do ilośći koszów!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   
-'''  
+  
 
 
 #%% Inverse LOGIT usage
-'''
+
 melted_logit = melted.copy()
 melted_logit.loc[:,'value'] = sp.special.expit(melted_logit.loc[:,'value'])
 
@@ -93,10 +93,10 @@ for b in bins:
     
 
 
-'''
+
 
 #%% Poisson's Distribution
-'''
+
 df_p = pd.DataFrame()
 
 lam = [1, 4, 10, 40]
@@ -122,7 +122,7 @@ f = f.map(natural_hist, 'value', cumulative=True)
     
 f = sns.FacetGrid(melted_poisson, col=r'$\lambda$', col_wrap=2)
 f = f.map(natural_hist, 'value')
-'''
+
 #%% Beta distribution
 
 df_ab = pd.DataFrame()
@@ -166,14 +166,14 @@ melted_mp = df_mp.melt()
 
 temp = melted_mp.loc[:,'variable'].str.split(',', expand=True)
 melted_mp.loc[:,r'$\mu$'] = temp[0]
-melted_mp.loc[:,r'$N_{samp}$'] = temp[1]
+melted_mp.loc[:,r'$N$'] = temp[1]
 del temp
 melted_mp.drop(columns=['variable'])
 
 f = sns.FacetGrid(melted_mp, sharey=False,\
                   col=r'$\mu$', col_order=list(str(i) for i in mean),\
-                  row=r'$N_{samp}$', row_order=list(str(i) for i in population))
-f = f.map(plt.hist, 'value')
+                  row=r'$N$', row_order=list(str(i) for i in population))
+f = f.map(plt.hist, 'value', bins=BINS)
 
 #%% Location-Dispersion parametrization
 df_ld = pd.DataFrame()
@@ -202,7 +202,7 @@ f = sns.FacetGrid(melted_ld, \
 f = f.map(plt.hist, 'value', bins=BINS*2)
 
 #%% Log-normal distribution
-'''
+
 df_ln = pd.DataFrame()
 mu = [-1, 0, 1]
 sigma = [0.1, 0.316,1]
@@ -232,4 +232,3 @@ def my_hist(x, FD_Bins=True, **kwargs):
 f = sns.FacetGrid(melted_ln, col=r'$\mu$', row=r'$\sigma$', sharex=False)
 f = f.map(plt.hist, 'value', bins=BINS)
 
-'''
